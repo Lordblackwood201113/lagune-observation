@@ -7,6 +7,19 @@ services:
     startCommand: streamlit run Home.py
     envVars:
       - key: GCP_SERVICE_ACCOUNT_KEY
-        # La valeur de cette variable ne doit pas être codée en dur ici.
-        # Pour plus de sécurité, définissez-la dans le dashboard Render.
-        value: ${GCP_SERVICE_ACCOUNT_KEY}
+        value: |
+          [gcp_service_account]
+          type = "service_account"
+          project_id = "mon-projet-id"
+          private_key_id = "xxx..."
+          private_key = """
+          -----BEGIN PRIVATE KEY-----
+          MIIEvQIBADANBgkq...
+          -----END PRIVATE KEY-----
+          """
+          client_email = "mon-compte@mon-projet-id.iam.gserviceaccount.com"
+          client_id = "12345678..."
+          auth_uri = "https://accounts.google.com/o/oauth2/auth"
+          token_uri = "https://oauth2.googleapis.com/token"
+          auth_provider_x509_cert_url = "https://www.googleapis.com/oauth2/v1/certs"
+          client_x509_cert_url = "https://www.googleapis.com/robot/v1/metadata/x509/mon-compte%40mon-projet-id.iam.gserviceaccount.com"
