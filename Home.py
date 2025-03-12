@@ -10,7 +10,7 @@ key_dict = dict(st.secrets["gcp_service_account"])
 # On convertit ce dict en chaîne JSON
 json_str = json.dumps(key_dict)
 
-credentials = gee.ServiceAccountCredentials(
+credentials = geemap.ServiceAccountCredentials(
     service_account=service_account, 
     key_data=json_str  # On passe la chaîne JSON
 )
