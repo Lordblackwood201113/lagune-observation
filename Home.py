@@ -1,6 +1,7 @@
 import streamlit as st
 import geemap.foliumap as geemap
 import json
+import ee
 
 service_account = "test-789@ee-learn2014.iam.gserviceaccount.com"
 
@@ -10,7 +11,7 @@ key_dict = dict(st.secrets["gcp_service_account"])
 # On convertit ce dict en chaîne JSON
 json_str = json.dumps(key_dict)
 
-credentials = geemap.ServiceAccountCredentials(
+credentials = ee.ServiceAccountCredentials(
     service_account=service_account, 
     key_data=json_str  # On passe la chaîne JSON
 )
