@@ -2,16 +2,20 @@ import streamlit as st
 import geemap.foliumap as geemap
 import json
 
-# Récupérer le dictionnaire depuis st.secrets
-key_dict = dict(st.secrets["gcp_service_account"])
-service_account_email = key_dict["client_email"]
+service_account = "test-789@ee-learn2014.iam.gserviceaccount.com"
 
-# Initialisation
-credentials = geemap.ee.ServiceAccountCredentials(
-    email=service_account_email,
-    key_data=key_dict
+# key_dict est un dict (St.secrets renvoie un dict)
+key_dict = dict(st.secrets["gcp_service_account"])
+
+# On convertit ce dict en chaîne JSON
+json_str = json.dumps(key_dict)
+
+credentials = gee.ServiceAccountCredentials(
+    service_account=service_account, 
+    key_data=json_str  # On passe la chaîne JSON
 )
-geemap.ee.Initialize(credentials)
+
+gee.Initialize(credentials)
 
 
 
