@@ -1,10 +1,20 @@
 import streamlit as st
 import geemap.foliumap as geemap
+import json
+import ee
+
+# Récupérer le dictionnaire depuis st.secrets
+key_dict = dict(st.secrets["gcp_service_account"])
+service_account_email = key_dict["client_email"]
+
+# Initialisation
+credentials = ee.ServiceAccountCredentials(
+    email=service_account_email,
+    key_data=key_dict
+)
+ee.Initialize(credentials)
 
 
-service_account = "test-789@ee-learn2014.iam.gserviceaccount.com"
-credentials = geemap.ee.ServiceAccountCredentials(service_account, 'ee-learn2014-4a0935ef7b24.json')
-geemap.ee.Initialize(credentials)
 
 st.set_page_config(layout="wide", page_title = "Water Observation", page_icon= "🌍")
 
