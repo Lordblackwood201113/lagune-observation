@@ -1,3 +1,4 @@
+StringIO
 geemap
 streamlit
 ee
