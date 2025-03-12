@@ -16,7 +16,7 @@ credentials = ee.ServiceAccountCredentials(
     key_data=json_str  # On passe la chaîne JSON
 )
 
-gee.Initialize(credentials)
+geemap.Initialize(credentials)
 
 
 
