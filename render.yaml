@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: water-observation
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: streamlit run Home.py
+    envVars:
+      - key: GCP_SERVICE_ACCOUNT_KEY
+        # La valeur de cette variable ne doit pas être codée en dur ici.
+        # Pour plus de sécurité, définissez-la dans le dashboard Render.
+        value: ${GCP_SERVICE_ACCOUNT_KEY}
