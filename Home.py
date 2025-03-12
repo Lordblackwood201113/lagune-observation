@@ -1,32 +1,32 @@
 import streamlit as st
 import geemap
 import json
-import tempfile
+import os
 
-def main():
-    # Récupérer la clé sous forme de dictionnaire
-    key_dict = st.secrets["gcp_service_account"]  # Ceci est un dict
-    service_account = key_dict["client_email"]    # "xxx@xxx.iam.gserviceaccount.com"
+# Récupérer le secret et le convertir en dict standard (si ce n'est pas déjà un dict)
+key_dict = dict(st.secrets["gcp_service_account"])
 
-    # Convertir le dict en chaîne JSON
-    key_json_str = json.dumps(key_dict)
+# Définir le chemin du fichier de clé (il ne sera pas poussé dans le dépôt si vous l'ajoutez à .gitignore)
+key_file_path = "private_key.json"
 
-    # Créer un fichier temporaire pour y écrire le JSON
-    with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as f:
-        f.write(key_json_str)
-        temp_key_path = f.name  # Retenir le chemin du fichier créé
+# Créer le fichier de clé s'il n'existe pas déjà
+if not os.path.exists(key_file_path):
+    with open(key_file_path, "w") as f:
+        json.dump(key_dict, f)
 
-    # Authentification avec geemap
-    geemap.ee_authenticate(
-        auth_mode='service_account',
-        service_account=service_account,
-        key_file=temp_key_path
-    )
+# Utiliser geemap.ee_authenticate en mode service_account
+geemap.ee_authenticate(
+    auth_mode="service_account",
+    service_account=key_dict["client_email"],
+    key_file=key_file_path
+)
 
-    # Maintenant, Earth Engine est initialisé, on peut utiliser geemap
-    m = geemap.Map()
-    m.add_basemap("HYBRID")
-    m.to_streamlit()
+# Initialiser Earth Engine (cette étape est effectuée automatiquement par ee_authenticate, 
+# mais peut être appelée explicitement si besoin)
+geemap.ee.Initialize()
 
-if __name__ == "__main__":
-    main()
+# Vous pouvez maintenant continuer avec votre application Streamlit
+st.write("Authentification Earth Engine réussie !")
+m = geemap.Map()
+m.add_basemap("HYBRID")
+m.to_streamlit()
