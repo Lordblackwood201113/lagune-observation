@@ -1,2 +1,2 @@
-geemap>=0.35.1
+geemap
 streamlit
