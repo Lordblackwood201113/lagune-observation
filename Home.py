@@ -15,7 +15,7 @@ if not os.path.exists(key_file_path):
         json.dump(key_dict, f)
 
 # Utiliser geemap.ee_authenticate en mode service_account
-geemap.ee_authenticate(
+geemap.ee.authenticate(
     auth_mode="service_account",
     service_account=key_dict["client_email"],
     key_file=key_file_path
